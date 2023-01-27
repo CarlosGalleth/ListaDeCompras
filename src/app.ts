@@ -1,7 +1,8 @@
 import express, { Application } from "express";
 import {
   createPurchaseList,
-  deleteWorkOrder,
+  deleteListItem,
+  deletePurchase,
   getAllPurchase,
   getOnePurchase,
   updatePurchase,
@@ -14,7 +15,8 @@ app.post("/purchaseList", createPurchaseList);
 app.get("/purchaseList", getAllPurchase);
 app.get("/purchaseList/:id", ensurePurchaseExists, getOnePurchase);
 app.patch("/purchaseList/:id", ensurePurchaseExists, updatePurchase);
-app.delete("/purchaseList/:id", ensurePurchaseExists, deleteWorkOrder);
+app.delete("/purchaseList/:id", ensurePurchaseExists, deletePurchase);
+app.delete("/purchaseList/:id/:name", ensurePurchaseExists, deleteListItem);
 
 app.listen(3000, () => {
   console.log("Server is running!");

@@ -5,6 +5,7 @@ declare global {
     interface Request {
       purchase: {
         indexPurchase: number;
+        purchaseName: string;
       };
     }
   }

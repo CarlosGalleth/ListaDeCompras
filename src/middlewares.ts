@@ -7,6 +7,7 @@ export const ensurePurchaseExists = (
   next: NextFunction
 ): Response | void => {
   const id: number = Number(request.params.id);
+  const name: string = String(request.params.name);
   const indexPurchase = database.findIndex((elem) => elem.id === id);
 
   if (indexPurchase === -1) {
@@ -17,6 +18,7 @@ export const ensurePurchaseExists = (
 
   request.purchase = {
     indexPurchase: indexPurchase,
+    purchaseName: name,
   };
 
   return next();

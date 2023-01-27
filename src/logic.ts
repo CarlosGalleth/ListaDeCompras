@@ -4,7 +4,7 @@ import {
   ProductDataRequiredKeys,
   ProductRequiredKeys,
 } from "./interfaces";
-import { request, Request, Response } from "express";
+import { Request, Response } from "express";
 import { database, ids } from "./database";
 
 const validatePurchaseData = (payload: any): IProductsList => {
@@ -96,13 +96,32 @@ export const updatePurchase = (
   return response.json(database[indexPurchase]);
 };
 
-export const deleteWorkOrder = (
+export const deletePurchase = (
   request: Request,
   response: Response
 ): Response => {
   const indexPurchase: number = request.purchase.indexPurchase;
 
   database.splice(indexPurchase, 1);
+
+  return response.status(204).send();
+};
+
+export const deleteListItem = (request: Request, response: Response) => {
+  const indexPurchase: number = request.purchase.indexPurchase;
+  const purchaseName: string = request.purchase.purchaseName;
+  const purchaseData = database[indexPurchase].data;
+  const foundedListItem = purchaseData.findIndex((elem) => {
+    return elem.name === purchaseName;
+  });
+
+  if (foundedListItem === -1) {
+    return response.status(404).json({
+      message: "Item not found",
+    });
+  }
+
+  purchaseData.splice(foundedListItem);
 
   return response.status(204).send();
 };
