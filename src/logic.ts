@@ -7,7 +7,7 @@ import {
 import { Request, Response } from "express";
 import { database, ids } from "./database";
 
-const validatePurchaseData = (payload: any): IProductsList => {
+export const validatePurchaseData = (payload: any): IProductsList => {
   const keys: Array<string> = Object.keys(payload);
   const requiredKeys: Array<ProductRequiredKeys> = ["listName", "data"];
   const requiredKeysData: Array<ProductDataRequiredKeys> = ["name", "quantity"];
