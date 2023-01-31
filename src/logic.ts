@@ -109,6 +109,10 @@ export const deletePurchase = (
 
   database.splice(indexPurchase, 1);
 
+  for (let index = indexPurchase; index < database.length; index++) {
+    database[index].id = database[index].id - 1;
+  }
+
   return response.status(204).send();
 };
 
