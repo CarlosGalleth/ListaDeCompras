@@ -14,7 +14,7 @@ app.use(express.json());
 app.post("/purchaseList", createPurchaseList);
 app.get("/purchaseList", getAllPurchase);
 app.get("/purchaseList/:id", ensurePurchaseExists, getOnePurchase);
-app.patch("/purchaseList/:id", ensurePurchaseExists, updatePurchase);
+app.patch("/purchaseList/:id/:name", ensurePurchaseExists, updatePurchase);
 app.delete("/purchaseList/:id", ensurePurchaseExists, deletePurchase);
 app.delete("/purchaseList/:id/:name", ensurePurchaseExists, deleteListItem);
 

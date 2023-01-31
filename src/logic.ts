@@ -45,6 +45,7 @@ export const createPurchaseList = (request: Request, response: Response) => {
     const orderData: IProductsList = validatePurchaseData(request.body);
     const id: number = database.length + 1;
     const idExists = ids.find((el) => el === id);
+
     if (typeof orderData.listName !== "string") {
       return response.status(400).json({
         message: "Internal server error",
@@ -91,9 +92,13 @@ export const updatePurchase = (
 ): Response => {
   const indexPurchase: number = request.purchase.indexPurchase;
 
-  database[indexPurchase] = { ...database[indexPurchase], ...request.body };
+  const itemFounded = database[indexPurchase].data.findIndex((elem) => {
+    return elem.name === request.purchase.purchaseName;
+  });
 
-  return response.json(database[indexPurchase]);
+  database[indexPurchase].data[itemFounded] = { ...request.body };
+
+  return response.json(database[indexPurchase].data[itemFounded]);
 };
 
 export const deletePurchase = (
@@ -111,6 +116,7 @@ export const deleteListItem = (request: Request, response: Response) => {
   const indexPurchase: number = request.purchase.indexPurchase;
   const purchaseName: string = request.purchase.purchaseName;
   const purchaseData = database[indexPurchase].data;
+
   const foundedListItem = purchaseData.findIndex((elem) => {
     return elem.name === purchaseName;
   });
@@ -121,7 +127,7 @@ export const deleteListItem = (request: Request, response: Response) => {
     });
   }
 
-  purchaseData.splice(foundedListItem);
+  purchaseData.splice(foundedListItem, 1);
 
   return response.status(204).send();
 };
