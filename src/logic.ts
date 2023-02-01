@@ -107,11 +107,13 @@ export const deletePurchase = (
 ): Response => {
   const indexPurchase: number = request.purchase.indexPurchase;
 
-  database.splice(indexPurchase, 1);
+  database.forEach((elem) => {
+    if (elem.id > indexPurchase) {
+      elem.id = elem.id - 1;
+    }
+  });
 
-  for (let index = indexPurchase; index < database.length; index++) {
-    database[index].id = database[index].id - 1;
-  }
+  database.splice(indexPurchase, 1);
 
   return response.status(204).send();
 };
